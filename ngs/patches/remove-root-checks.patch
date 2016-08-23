@@ -1,0 +1,52 @@
+Remove root checks from NCBI custom build scripts
+--- a/ngs-sdk/Makefile.install
++++ b/ngs-sdk/Makefile.install
+@@ -63,11 +63,7 @@
+ INCLUDE_SYMLINK = $(ROOT)/usr/include/ngs
+ PROFILE_FILE = $(ROOT)/etc/profile.d/ngs-sdk
+ 
+-ifeq (linux, $(OS))
+-    ifeq (0, $(shell id -u))
+-        LINUX_ROOT = true
+-    endif
+-endif
++LINUX_ROOT = false
+ 
+ install: copylibs copyincludes copyexamples
+ ifeq (true, $(LINUX_ROOT))
+--- a/ngs-java/Makefile.java
++++ b/ngs-java/Makefile.java
+@@ -59,12 +59,7 @@
+ JAR_TARGET = $(INST_JARDIR)/ngs-java.jar
+ DOC_TARGET = $(INST_SHAREDIR)/doc/
+ 
+-ifeq (linux, $(OS))
+-    ifeq (0, $(shell id -u))
+-        LINUX_ROOT = true
+-        DOC_TARGET = $(ROOT)/usr/local/share/doc/ngs/
+-    endif
+-endif
++LINUX_ROOT = false
+ 
+ install: $(TARGETS) $(INST_JARDIR) $(INST_JARDIR)/ngs-java.jar.$(VERSION) copydocs copyexamples 
+ ifeq (true, $(LINUX_ROOT))
+--- a/ngs-python/Makefile.python
++++ b/ngs-python/Makefile.python
+@@ -56,7 +56,7 @@
+ install: $(TARGETS) $(INST_PYTHONDIR) copyexamples
+ ifeq (0, $(shell id -u))
+ 	@ echo "Installing ngs-python package..."
+-	@ python setup.py -q install
++	@ python setup.py -q install --root="$(INST_PYTHONDIR)"
+  
+ else
+ 	@ echo "Installing ngs-python package..."
+@@ -78,7 +78,7 @@
+ install: $(TARGETS) $(INST_PYTHONDIR) copyexamples
+ ifeq (0, $(shell id -u))
+ 	@ echo "Installing ngs package..."
+-	@ python setup.py -q install
++	@ python setup.py -q install --root="$(INST_PYTHONDIR)"
+    
+ else
+ 	@ echo "Installing ngs package..."

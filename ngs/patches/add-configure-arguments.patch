@@ -1,0 +1,13 @@
+--- a/ngs-sdk/setup/konfigure.perl
++++ b/ngs-sdk/setup/konfigure.perl
+@@ -81,6 +81,10 @@
+                 'debug',
+                 'help',
+                 'prefix=s',
++		'bindir=s',
++		'libdir=s',
++		'includedir=s',
++		'sharedir=s',
+                 'reconfigure',
+                 'status',
+                 'with-debug',
